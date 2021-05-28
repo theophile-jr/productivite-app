@@ -1,2 +1,20 @@
-import sqlite3
-#https://prod.liveshare.vsengsaas.visualstudio.com/join?E9CFD30589214E2F60028EC0255BE6323F61
+from flask import Flask
+
+app = Flask(__name__)
+
+
+@app.route('/')
+def home():
+    message = "Flask HTTP Server \n"
+    return message
+
+
+@app.route('/login')
+def login():
+    message = "Le login marche \n"
+    return message
+
+
+port = 5203
+if __name__ == '__main__':
+    app.run(host='0.0.0.0', port=port)
