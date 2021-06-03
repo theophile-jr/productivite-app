@@ -1,12 +1,34 @@
 <!-- templates/index.html -->
+<link rel="stylesheet" href="../static/css/master.css">
+<script src="/static/js/todo.js" ></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
 {% extends "base.html" %}
 
 {% block content %}
-<h1 class="title">
-  Flask Login Example
-</h1>
-<h2 class="subtitle">
-  Easy authentication and authorization in Flask.
-</h2>
+<div id="todo-container">
+    <table id="todo-table" style="width:100%">
+        <tr>
+            <th> <span id="nbTask"></span> TASKS</th>
+            <th>DUE DATE</th>
+            <th>PRIORITY</th>
+        </tr>
+
+        <tr>
+            <td> <input class="input-form" placeholder="Your task" type="text" id="task" name="task"> </td>
+            <td> <input class="input-form" type="date" id="date" name="date"> </td>
+            <td>
+                <select class="no-style input-form" id="priority" name="priority">
+                    <option value="hight">Hight</option>
+                    <option value="medium" selected>Medium</option>
+                    <option value="low">Low</option>
+                </select>
+                <button onclick="onTaskAdded();sendTodoForm()" class="btn btn-success">ADD</button>
+            </td>
+        </tr>
+
+    </table>
+
+
+</div>
 {% endblock %}
