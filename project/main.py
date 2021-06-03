@@ -31,7 +31,7 @@ def todo_post():
     cursor = connection.cursor()
 
 #     Add the elements in the DB
-    cursor.execute("INSERT INTO todo VALUES ('" + current_user.name + "', '" + data['task'] + "', '" + data['date'] + "', '" + data['priority55'] + "')")
+    cursor.execute("INSERT INTO todo VALUES ('" + current_user.name + "', '" + data['task'] + "', '" + data['date'] + "', '" + data['priority'] + "')")
 
     cursor.execute("SELECT * FROM todo")
 
@@ -39,5 +39,4 @@ def todo_post():
     print(data_list)
     connection.commit() #Save changes
     connection.close()
-    return None
-
+    return "Success"
