@@ -5,6 +5,22 @@
   Login your Ecode Directe Account
 </h1>
 <h2 class="subtitle">
-  Easy authentication and authorization in Flask.
+  This will allow us to plan your homework in our tasks.
 </h2>
+
+<form method="POST" action="/login">
+  <div class="field">
+      <div class="control">
+          <input class="input is-large" type="email" name="email" placeholder="Your Ecole Directe Email" autofocus="">
+      </div>
+  </div>
+
+  <div class="field">
+      <div class="control">
+          <input class="input is-large" type="password" name="password" placeholder="Your Ecole Direct Password">
+      </div>
+  </div>
+  <button class="button is-block is-info is-large is-fullwidth">Login</button>
+</form>
+
 {% endblock %}

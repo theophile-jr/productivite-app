@@ -19,3 +19,19 @@ def profile():
 def ecoledirecte():
     return render_template('ecoledirecte.html')
 
+@main.route('/ecoledirect', methods=['POST'])
+def ecoledirect_post():
+    email = request.form.get('email')
+    password = request.form.get('password')
+
+    user = User.query.filter_by(email=email).first()
+
+    # check if user actually exists
+    # take the user supplied password, hash it, and compare it to the hashed password in database
+    if not user or not check_password_hash(user.password, password): 
+        flash('Please check your login details and try again.')
+        return redirect(url_for('auth.login')) # if user doesn't exist or password is wrong, reload the page
+
+    # if the above check passes, then we know the user has the right credentials
+    login_user(user, remember=remember)
+    return redirect(url_for('main.profile'))
