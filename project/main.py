@@ -17,6 +17,10 @@ def index():
 def profile():
     return render_template('profile.html', name=current_user.name)
 
+@main.route('/todo')
+@login_required
+def todo():
+    return render_template('todo.html', name=current_user.name)
 
 # Todo section
 # Add the elements added by the user in the DB
