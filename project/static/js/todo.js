@@ -48,19 +48,49 @@ function updateTask () {
 function sendTodoForm() {
     //DESCRIPTION : Send data of to the backend
     //Parameters : None
-        $.ajax({
-            type: "POST",
-            url: "/",
-            // timeout: 5000,
-            data: JSON.stringify({ task: $("#task").val(), date: $("#date").val(), priority: $("#priority").val()}),
-            cache: false,
-            success: function (success) {
-                console.log(success)
-            },
-            error: function () {
-                console.log("Une erreur");
+    $.ajax({
+        type: "POST",
+        url: "/",
+        // timeout: 5000,
+        data: JSON.stringify({ task: $("#task").val(), date: $("#date").val(), priority: $("#priority").val()}),
+        cache: false,
+        success: function (success) {
+            console.log(success)
+        },
+        error: function () {
+            console.log("Une erreur");
+        }
+    });
+}
+
+
+window.onload = function GetTodoData() {
+    //DESCRIPTION : Send data of to the backend
+    //Parameters : None
+    $.ajax({
+        type: "POST",
+        url: "/getdata",
+        // timeout: 5000,
+        data: JSON.stringify({ }),
+        cache: false,
+        success: function (todoData) {
+            console.log(todoData[1])
+            for (y=0; y<todoData.length; y++) {
+                console.log(y)
+                taskList.push({
+                    name: todoData[y][1],
+                    date: todoData[y][2],
+                    priority: todoData[y][3]
+                });
+                console.log(taskList)
+
+                updateTask ();
             }
-        });
+        },
+        error: function () {
+            console.log("Une erreur");
+        }
+    });
 }
 
 // function clearForm(idForm) {
