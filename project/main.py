@@ -57,7 +57,7 @@ def todo_get():
     cursor = connection.cursor()
     cursor.execute(f"SELECT * FROM todo WHERE id='{current_user.name}'")
     data_list = cursor.fetchall()
-    print(data_list)
+    #print(data_list)
 
     connection.commit() #Save changes
     connection.close()
