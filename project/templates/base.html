@@ -31,6 +31,13 @@
                                 Profile
                             </a>
                             {% endif %}
+
+                            {% if current_user.is_authenticated %}
+                            <a href="{{ url_for('main.todo') }}" class="navbar-item">
+                                Todo
+                            </a>
+                            {% endif %}
+
                             {% if not current_user.is_authenticated %}
                             <a href="{{ url_for('auth.login') }}" class="navbar-item">
                                 Login
