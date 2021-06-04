@@ -46,3 +46,8 @@ def ecoledirecte_post():
     ED.link(ED_username, ED_password)
 
     return redirect(url_for('main.profile'))
+
+@main.route('/pomodoro')
+@login_required
+def pomodoro():
+    return render_template('pomodoro.html')

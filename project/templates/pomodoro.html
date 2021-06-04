@@ -1,0 +1,40 @@
+<!-- templates/pomodoro.html -->
+{% extends "base.html" %}
+{% block content %}
+<link rel="stylesheet" href="{{ url_for('static', filename='pomodoro-style.css') }}" />
+
+<div class="pomodoro-page">
+    <h1>Pomodoro</h1>
+
+    <figure class="clock">
+      <div class="mins">0</div>
+      <div>:</div>
+      <div class="secs">00</div>
+      <audio
+        src="http://soundbible.com/mp3/service-bell_daniel_simion.mp3"
+      ></audio>
+      <svg class="progress-ring" height="120" width="120">
+        <circle
+          class="progress-ring__circle"
+          stroke-width="8"
+          fill="transparent"
+          r="50"
+          cx="60"
+          cy="60"
+        />
+      </svg>
+    </figure>
+
+    <div class="btn-group">
+      <button class="start">start focus</button>
+      <button class="reset">reset</button>
+      <button class="pause">pause</button>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/settings.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/timer.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/progress.js') }}"></script>
+</div>
+
+
+{% endblock %}
