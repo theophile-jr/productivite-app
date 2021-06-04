@@ -54,14 +54,12 @@ def getdata():
 @main.route('/getdata', methods=['POST'])
 @login_required
 def todo_get():
-    targetlist = list(request.get_data())
-    #print(targetlist)
     # get all tasks of the current user
     connection = sqlite3.connect('db.sqlite') #Connect to DB
     cursor = connection.cursor()
     cursor.execute(f"SELECT * FROM todo WHERE id='{current_user.name}'")
     data_list = cursor.fetchall()
-    print(data_list)
+    #print(data_list)
 
     connection.commit() #Save changes
     connection.close()
