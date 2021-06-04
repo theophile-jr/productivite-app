@@ -12,6 +12,7 @@
             <th> <span id="nbTask"></span> TASKS</th>
             <th>DUE DATE</th>
             <th>PRIORITY</th>
+            <th>TAG</th>
         </tr>
 
         <tr>
@@ -23,12 +24,17 @@
                     <option value="medium" selected>Medium</option>
                     <option value="low">Low</option>
                 </select>
+            </td>
+            <td>
+                <form action="/tag_complete" autocomplete="on">
+                    <input class="input-form" placeholder="tag" type="text" id="tag-selector" name="tag-selector">
+                </form>
+            </td>
+            <td>
                 <button onclick="onTaskAdded();sendTodoForm()" class="btn btn-success">ADD</button>
             </td>
         </tr>
 
     </table>
-
-
 </div>
 {% endblock %}
