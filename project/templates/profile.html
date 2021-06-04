@@ -6,4 +6,11 @@
 <h1 class="title">
   Welcome, {{ name }}!
 </h1>
+{% if not ecoledirecte %}
+<h2>
+  <a href="{{ url_for('main.ecoledirecte') }}">Link your ecoledirecte account</a>
+</h2>
+{% else %}
+Ecole directe linked <a href="{{ url_for('main.ecoledirecte_unlink') }}">(Unlink ?)</a>
+{% endif %}
 {% endblock %}

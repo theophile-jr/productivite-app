@@ -1,7 +1,8 @@
 # main.py
 
-from flask import Blueprint, render_template
+from flask import Blueprint, render_template, redirect, url_for, request, flash
 from flask_login import login_required, current_user
+from .ecoleDirecte import EcoleDirecte as ED
 
 main = Blueprint('main', __name__)
 
@@ -12,26 +13,36 @@ def index():
 @main.route('/profile')
 @login_required
 def profile():
-    return render_template('profile.html', name=current_user.name)
+    return render_template('profile.html', name=current_user.name, ecoledirecte=bool(current_user.ed_username))
 
 @main.route('/ecoledirecte')
 @login_required
 def ecoledirecte():
+    # If an account is already given, stop here
+    if current_user.ed_username:
+        return redirect(url_for("main.profile"))
     return render_template('ecoledirecte.html')
 
-@main.route('/ecoledirect', methods=['POST'])
-def ecoledirect_post():
-    email = request.form.get('email')
-    password = request.form.get('password')
+@main.route('/ecoledirecte_unlink')
+@login_required
+def ecoledirecte_unlink():
+    ED.unlink()
+    return redirect(url_for("main.profile"))
 
-    user = User.query.filter_by(email=email).first()
+@main.route('/ecoledirecte', methods=['POST'])
+@login_required
+def ecoledirecte_post():
+    # Get informations throught the form.
+    ED_username = request.form.get('username')
+    ED_password = request.form.get('password')
 
-    # check if user actually exists
-    # take the user supplied password, hash it, and compare it to the hashed password in database
-    if not user or not check_password_hash(user.password, password): 
-        flash('Please check your login details and try again.')
-        return redirect(url_for('auth.login')) # if user doesn't exist or password is wrong, reload the page
+    #Check if the informations are valid, and display an error if not.
+    response, token = ED.login(ED_username, ED_password)
+    if not token :
+        flash('Invalid username or password, please try again.')
+        return redirect(url_for("main.ecoledirecte"))
 
-    # if the above check passes, then we know the user has the right credentials
-    login_user(user, remember=remember)
+    # Add informations in the database.
+    ED.link(ED_username, ED_password)
+
     return redirect(url_for('main.profile'))

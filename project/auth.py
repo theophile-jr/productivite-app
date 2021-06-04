@@ -4,6 +4,7 @@ from flask import Blueprint, render_template, redirect, url_for, request, flash
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import login_user, logout_user, login_required, current_user
 from .models import User
+
 from . import db
 
 auth = Blueprint('auth', __name__)
@@ -61,48 +62,3 @@ def signup_post():
 def logout():
     logout_user()
     return redirect(url_for('main.index'))
-
-@login_required
-@auth.route('/ecoledirecte')
-def ecoledirecte():
-    return render_template('ecoledirecte.html')
-
-@login_required
-@auth.route('/ecoledirecte', methods=['POST'])
-def ecoledirecte_post():
-    user = current_user
-
-    # If an account is already given, stop here
-    if user.ed_username:
-        return redirect(url_for("main.index"))
-
-    EDusername = request.form.get('username')
-    EDpassword = request.form.get('password')
-
-    #Check if the informations are valid.
-    response, token = login(EDusername, EDpassword)
-    if not token : 
-        return redirect(url_for("auth.ecoledirect"))
-
-
-    user.ed_username = EDusername
-    user.ed_password = EDpassword
-    db.session.commit()
-
-    return redirect(url_for('main.index'))
-
-def ED_login(username, password):
-    payload = 'data={ "identifiant": "' + username + \
-              '", "motdepasse": "' + password + '", "acceptationCharte": true }'
-    try:
-        response = req(
-            "POST", "https://api.ecoledirecte.com/v3/login.awp", data=payload).json()
-        token = response['token'] or token
-        return response, token
-    except Exception as exception:
-        if type(exception).__name__ == "ConnectionError":
-            print("[reverse bold red]La connexion a échoué[/]")
-            print("[red]Vérifiez votre connexion Internet.[/]")
-        else:
-            print("[reverse bold red]Une erreur inconnue est survenue.[/]")
-        calm_exit()
