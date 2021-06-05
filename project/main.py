@@ -94,8 +94,8 @@ def ecoledirecte_post():
 
     #Check if the informations are valid, and display an error if not.
     response, token = ED.login(ED_username, ED_password)
-    print(response)
-    print(token)
+    #print(response)
+    #print(token)
     if not token :
         flash('Invalid username or password, please try again.')
         return redirect(url_for("main.ecoledirecte"))

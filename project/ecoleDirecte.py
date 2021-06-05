@@ -11,6 +11,7 @@ class EcoleDirecte():
         try:
             response = req(
                 "POST", "https://api.ecoledirecte.com/v3/login.awp", data=payload).json()
+            print(payload)
             token = response['token']
             return response, token
         except Exception as exception:
