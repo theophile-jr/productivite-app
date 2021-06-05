@@ -1,17 +1,17 @@
 from requests import request as req
 from flask_login import current_user
 from werkzeug.security import generate_password_hash
+from html import escape
 from . import db
 
 class EcoleDirecte():
 
     def login(username, password):
         payload = 'data={ "identifiant": "' + username + \
-                '", "motdepasse": "' + password + '", "acceptationCharte": true }'
+                '", "motdepasse": "' + escape(password) + '", "acceptationCharte": true }'
         try:
             response = req(
                 "POST", "https://api.ecoledirecte.com/v3/login.awp", data=payload).json()
-            print(payload)
             token = response['token']
             return response, token
         except Exception as exception:

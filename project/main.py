@@ -90,12 +90,11 @@ def ecoledirecte_unlink():
 def ecoledirecte_post():
     # Get informations throught the form.
     ED_username = request.form.get('username')
-    ED_password = request.form.get('password')
+    ED_password = request.form.get('password').replace("&", "%26")
 
     #Check if the informations are valid, and display an error if not.
     response, token = ED.login(ED_username, ED_password)
-    #print(response)
-    #print(token)
+    
     if not token :
         flash('Invalid username or password, please try again.')
         return redirect(url_for("main.ecoledirecte"))
