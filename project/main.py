@@ -37,19 +37,20 @@ def todo_post():
     connection = sqlite3.connect('db.sqlite') #Connect to DB
     cursor = connection.cursor()
 
+    #Update the task status in the DB
     if data['goal'] == "updateStatus":
         cursor.execute("UPDATE todo SET status ='"+data['status']+"' WHERE taskID="+data['taskID']+"")
 
     elif data['goal'] == "addElement":
-        cursor.execute("INSERT INTO todo (userID, task, date, priority, status) VALUES ('" + current_user.name + "', '" + data['task'] + "', '" + data['date'] + "', '" + data['priority'] + "', 'enable')")
+        cursor.execute("INSERT INTO todo (userID, task, date, priority) VALUES ('" + current_user.name + "', '" + data['task'] + "', '" + data['date'] + "', '" + data['priority'] + "')")
+        cursor.execute("SELECT * FROM todo WHERE userID='" + current_user.name + "' ORDER BY taskID DESC LIMIT 1")
+        data_list = cursor.fetchall()
+        print(f"DEBUG : TaskID -> {data_list[0][0]}") #DEBUG
 
-    cursor.execute("SELECT * FROM todo")
-
-    data_list = cursor.fetchall()
-    print(data_list)
     connection.commit() #Save changes
     connection.close()
-    return "Success"
+
+    return jsonify(data_list[0][0]) #Return the taskID
 
 @main.route('/getdata')
 @login_required
