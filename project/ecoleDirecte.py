@@ -1,6 +1,7 @@
 from requests import request as req
 from flask_login import current_user
 from werkzeug.security import generate_password_hash
+from urllib.parse import quote_plus
 from . import db
 
 class EcoleDirecte():
@@ -10,7 +11,7 @@ class EcoleDirecte():
                 '", "motdepasse": "' + password + '", "acceptationCharte": true }'
         try:
             response = req(
-                "POST", "https://api.ecoledirecte.com/v3/login.awp", data=payload).json()
+                "POST", "https://api.ecoledirecte.com/v3/login.awp", data=quote_plus(payload)).json()
             token = response['token']
             return response, token
         except Exception as exception:

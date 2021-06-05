@@ -1,6 +1,6 @@
 # main.py
 
-from flask import Blueprint, render_template, request, jsonify, Flask
+from flask import Blueprint, render_template, request, jsonify, Flask, redirect, flash, url_for
 from flask_login import login_required, current_user
 
 import sqlite3
@@ -17,7 +17,7 @@ def index():
 @main.route('/profile')
 @login_required
 def profile():
-    return render_template('profile.html', name=current_user.name)
+    return render_template('profile.html', name=current_user.name, ecoledirecte=bool(current_user.ed_username))
 
 @main.route('/todo')
 @login_required
@@ -96,8 +96,7 @@ def ecoledirecte_post():
 
     #Check if the informations are valid, and display an error if not.
     response, token = ED.login(ED_username, ED_password)
-    print(response)
-    print(token)
+
     if not token :
         flash('Invalid username or password, please try again.')
         return redirect(url_for("main.ecoledirecte"))
