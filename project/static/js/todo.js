@@ -9,7 +9,7 @@ function onTaskAdded() {
         date: document.getElementById("date").value,
         priority: document.getElementById("priority").value
     });
-    console.log(taskList)
+    // console.log(taskList)
 
     updateTask ();
 }
@@ -18,7 +18,7 @@ function updateTask () {
     //DESCRIPTION : Add the elements added previousely in the DOM
     //Parameters : None
 
-    console.log(taskList[0].name)
+    // console.log(taskList[0].name)
     //Create elements
     for (i=0; i < taskList.length; i++) {
 
@@ -32,8 +32,8 @@ function updateTask () {
 
             //Add the name and the checkbox
             var td = document.createElement("td");
-            console.log(taskList[i].status)
-            td.innerHTML = "<input type=\"checkbox\" id=\""+taskNameWithoutSpace+i+"CheckBox"+"\" onchange=\"taskStatusChanged(this.id); sendTodoForm('updateTaskStatus', taskList[i].taskID)\" > " + taskList[i].name;
+            // console.log(taskList[i].status)
+            td.innerHTML = "<input type=\"checkbox\" id=\""+taskNameWithoutSpace+i+"CheckBox"+"\" onchange=\"taskStatusChanged(this.id); sendTodoForm('updateTaskStatus', "+taskList[i].taskID+", this.checked)\" > " + taskList[i].name;
             document.getElementById(taskList[i].name + "Task" + i).appendChild(td);
             if (taskList[i].status == "disable") {
                 document.getElementById("" + taskNameWithoutSpace + i + "CheckBox" + "").checked = true;
@@ -53,14 +53,22 @@ function updateTask () {
     }
 }
 
-function sendTodoForm() {
+function sendTodoForm(goal,checkBoxID, checkBoxStatus) {
     //DESCRIPTION : Send data of to the backend
     //Parameters : None
+    console.log(checkBoxStatus)
+    console.log(checkBoxStatus ? 'enable' : 'disable')
+
+    if (goal == "updateTaskStatus")
+        data = JSON.stringify({goal: 'updateStatus' , taskID : ""+checkBoxID+"", status: !checkBoxStatus ? 'enable' : 'disable'})
+    else
+        data = JSON.stringify({goal: 'addElement', task: $("#task").val(), date: $("#date").val(), priority: $("#priority").val()})
+
     $.ajax({
         type: "POST",
         url: "/",
         // timeout: 5000,
-        data: JSON.stringify({ task: $("#task").val(), date: $("#date").val(), priority: $("#priority").val()}),
+        data: data,
         cache: false,
         success: function (success) {
             console.log(success)
@@ -81,9 +89,9 @@ window.onload = function GetTodoData() {
         data: JSON.stringify({ }),
         cache: false,
         success: function (todoData) {
-            console.log(todoData[1])
+            // console.log(todoData[1])
             for (y=0; y<todoData.length; y++) {
-                console.log(y)
+                // console.log(y)
                 taskList.push({
                     taskID: todoData[y][0],
                     name: todoData[y][2],
@@ -91,7 +99,7 @@ window.onload = function GetTodoData() {
                     priority: todoData[y][4],
                     status : todoData[y][5]
                 });
-                console.log(taskList)
+                // console.log(taskList)
 
                 updateTask ();
             }
@@ -104,11 +112,11 @@ window.onload = function GetTodoData() {
 
 function taskStatusChanged (checkBoxID)
 {
-    console.log(checkBoxID.id);
+    // console.log(checkBoxID.id);
     if (document.getElementById(checkBoxID).checked)
-        console.log($("#"+ checkBoxID).parentsUntil("table").addClass("line-through"))
+        $("#"+ checkBoxID).parentsUntil("table").addClass("line-through")
     else
-        console.log($("#"+ checkBoxID).parentsUntil("table").removeClass("line-through"))
+        $("#"+ checkBoxID).parentsUntil("table").removeClass("line-through")
 
 }
 

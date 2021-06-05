@@ -37,8 +37,11 @@ def todo_post():
     connection = sqlite3.connect('db.sqlite') #Connect to DB
     cursor = connection.cursor()
 
-#     Add the elements in the DB
-    cursor.execute("INSERT INTO todo (userID, task, date, priority, status) VALUES ('" + current_user.name + "', '" + data['task'] + "', '" + data['date'] + "', '" + data['priority'] + "', 'enable')")
+    if data['goal'] == "updateStatus":
+        cursor.execute("UPDATE todo SET status ='"+data['status']+"' WHERE taskID="+data['taskID']+"")
+
+    elif data['goal'] == "addElement":
+        cursor.execute("INSERT INTO todo (userID, task, date, priority, status) VALUES ('" + current_user.name + "', '" + data['task'] + "', '" + data['date'] + "', '" + data['priority'] + "', 'enable')")
 
     cursor.execute("SELECT * FROM todo")
 
