@@ -82,7 +82,7 @@ function sendTodoForm(goal, checkBoxID, checkBoxStatus) {
             }
         },
         error: function () {
-            console.log("An error occurred");
+            console.log("An error occurred while sending data");
         }
     });
 }
@@ -91,7 +91,7 @@ window.onload = function GetTodoData() {
     //DESCRIPTION : Get the user tasks from the DB
     //Parameters : None
 
-    setInterval(function () {
+    taskList = [];
     $.ajax({
         type: "POST",
         url: "/getdata",
@@ -106,14 +106,13 @@ window.onload = function GetTodoData() {
                     priority: todoData[y][4],
                     status: todoData[y][5]
                 });
-                updateTask(); //Show them in the DOM
+                createTask(); //Show them in the DOM
             }
         },
         error: function () {
             console.log("Une erreur");
         }
     });
-    }, 5000);
 }
 
 function taskStatusChanged(checkBoxID) {

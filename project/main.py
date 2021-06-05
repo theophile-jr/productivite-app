@@ -40,17 +40,17 @@ def todo_post():
     #Update the task status in the DB
     if data['goal'] == "updateStatus":
         cursor.execute("UPDATE todo SET status ='"+data['status']+"' WHERE taskID="+data['taskID']+"")
-
-    elif data['goal'] == "addElement":
-        cursor.execute("INSERT INTO todo (userID, task, date, priority) VALUES ('" + current_user.name + "', '" + data['task'] + "', '" + data['date'] + "', '" + data['priority'] + "')")
         cursor.execute("SELECT * FROM todo WHERE userID='" + current_user.name + "' ORDER BY taskID DESC LIMIT 1")
         data_list = cursor.fetchall()
         print(f"DEBUG : TaskID -> {data_list[0][0]}") #DEBUG
 
+    elif data['goal'] == "addElement":
+        cursor.execute("INSERT INTO todo (userID, task, date, priority) VALUES ('" + current_user.name + "', '" + data['task'] + "', '" + data['date'] + "', '" + data['priority'] + "')")
+
     connection.commit() #Save changes
     connection.close()
 
-    return jsonify(data_list[0][0]) #Return the taskID
+    return jsonify(data_list[0][0] if 'data_list' in locals() else "Success") #Return the taskID
 
 @main.route('/getdata')
 @login_required
