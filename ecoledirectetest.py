@@ -1,11 +1,14 @@
 from getpass import getpass
 import locale
-import base64
 from requests import request as req
 from rich import print
 from rich.console import Console
 from rich.table import Table
 import inquirer
+
+import base64
+import html
+import re
 
 locale.setlocale(locale.LC_ALL, 'fr_FR.UTF-8')
 console = Console()
@@ -76,7 +79,7 @@ def select_account(accounts: list):
 def fetch_work(account, token: str):
     payload = 'data={"token": "' + token + '"}'
     response = req("POST", "https://api.ecoledirecte.com/v3/Eleves/" +
-                   str(account['id']) + "/cahierdetexte/2021-06-01.awp?verbe=get&", data=payload).json()
+                   str(account['id']) + "/cahierdetexte/2021-06-07.awp?verbe=get&", data=payload).json()
     #print(response)
     token = response['token'] or token
     return response, token
@@ -85,9 +88,25 @@ def fetch_work(account, token: str):
 
 def handle_work(data):
     #print(list(data.items()))
-    for task in list(data.items())[1]:
-        print(task[0]) # devoir en entier
+    tasks = list(data.items())[1][1]
     
+    for task in tasks:
+        print(task) # devoir en entier
+
+        descriptionHTML = str(base64.b64decode(task["aFaire"]["contenu"]))
+        print("HTML description :",descriptionHTML)
+
+        description = html.unescape(descriptionHTML)
+        
+        print("Description Regex :", description)
+
+        # Conversion Regex en string normale
+        desc = re.sub(r"<\/?[a-z]+>|\n", "", description)
+
+        print(desc)
+
+
+
 
 def main():
     username = input("Identifiant: ")
