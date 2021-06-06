@@ -44,8 +44,10 @@ def todo_post():
         cursor.execute("UPDATE todo SET status ='"+data['status']+"' WHERE taskID="+data['taskID']+"")
 
     elif data['goal'] == "addElement":
-        cursor.execute("INSERT INTO todo (userID, task, date, priority) VALUES ('" + current_user.name + "', '" + data['task'] + "', '" + data['date'] + "', '" + data['priority'] + "')")
-        cursor.execute("SELECT * FROM todo WHERE userID='" + current_user.name + "' ORDER BY taskID DESC LIMIT 1")
+        cursor.execute("INSERT INTO todo (userID, task, date, priority) VALUES ('{}','{}','{}','{}')"
+                .format(current_user.name, data['task'], data['date'], data['priority']))
+        cursor.execute("SELECT * FROM todo WHERE userID='{}' ORDER BY taskID DESC LIMIT 1"
+                .format(current_user.name))
         data_list = cursor.fetchall()
         print(f"DEBUG : TaskID -> {data_list[0][0]}") #DEBUG
 
