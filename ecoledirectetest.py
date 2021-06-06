@@ -1,6 +1,6 @@
 from getpass import getpass
 import locale
-
+import base64
 from requests import request as req
 from rich import print
 from rich.console import Console
@@ -76,7 +76,7 @@ def select_account(accounts: list):
 def fetch_work(account, token: str):
     payload = 'data={"token": "' + token + '"}'
     response = req("POST", "https://api.ecoledirecte.com/v3/Eleves/" +
-                   str(account['id']) + "/cahierdetexte.awp?verbe=get&", data=payload).json()
+                   str(account['id']) + "/cahierdetexte/2021-06-01.awp?verbe=get&", data=payload).json()
     #print(response)
     token = response['token'] or token
     return response, token
@@ -84,9 +84,10 @@ def fetch_work(account, token: str):
 #https://api.ecoledirecte.com/v3/Eleves/6097/cahierdetexte/2021-06-08.awp?verbe=get&
 
 def handle_work(data):
-    for task in data.items():
-        print(task)
-
+    #print(list(data.items()))
+    for task in list(data.items())[1]:
+        print(task[0]) # devoir en entier
+    
 
 def main():
     username = input("Identifiant: ")
@@ -96,12 +97,11 @@ def main():
     if not token:
         print(loginRes['message'])
         calm_exit()
-
     account = select_account(loginRes['data']['accounts'])
     print(f"[blue]Bonjour, [bold]{account['prenom']}[/].[/]")
 
     WorkRes, token = fetch_work(account, token)
-    print(WorkRes['code'])
+    #print(WorkRes['code'])
     if WorkRes['code'] != 200:
         print(WorkRes['message'])
         calm_exit()
