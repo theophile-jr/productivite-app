@@ -38,11 +38,11 @@ function createTask() {
             td.innerHTML = taskList[i].priority;
             document.getElementById("Task" + taskList[i].taskID).appendChild(td);
 
-            //Empty colomne
+            //Empty column
             var td = document.createElement("td");
             document.getElementById("Task" + taskList[i].taskID).appendChild(td);
 
-            //Add the trashbin
+            //Add the trash
             var td = document.createElement("td");
             td.innerHTML = "<button onclick=\"sendTodoForm('removeElement', this.name)\" name='" + taskList[i].taskID + "' class='no-style' ><i class=\"fa fa-trash-o trashbin\" style=\"font-size:20px\"></i></button>"
             document.getElementById("Task" + taskList[i].taskID).appendChild(td);
@@ -139,7 +139,7 @@ window.onload = function GetTodoData() {
             }
         },
         error: function () {
-            console.log("Une erreur");
+            console.log("An error occurred");
         }
     });
 }
@@ -157,7 +157,7 @@ function taskStatusChanged(checkBoxID) {
 }
 
 function checkTaskForm(data) {
-    //Description : Check if all input is corret
+    //Description : Check if all input is correct
     //Parameters  : data : -> the data to check
     //Return      : true or false
 
