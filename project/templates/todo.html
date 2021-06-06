@@ -6,35 +6,36 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div id="todo-container">
-    <table id="todo-table" style="width:100%">
-        <tr>
-            <th><span id="nbTask"></span> TASKS</th>
-            <th>DUE DATE</th>
-            <th>PRIORITY</th>
-            <th>TAG</th>
-        </tr>
+<div  class="items-center justify-center colored flex marginTop-xl w-full h-full">
+    <div class="scroll-x items-center justify-center" id="todo-container">
+        <table id="todo-table">
+            <tr>
+                <th> TASKS</th>
+                <th><strong>DUE DATE</strong></th>
+                <th><strong>PRIORITY</strong></th>
+                <th><strong>TAG</strong></th>
+            </tr>
 
-        <tr>
-            <td><input class="input-form" placeholder="Your task" type="text" id="task" name="task"></td>
-            <td><input class="input-form" type="date" id="date" name="date"></td>
-            <td>
-                <select class="no-style input-form" id="priority" name="priority">
-                    <option value="hight">Hight</option>
-                    <option value="medium" selected>Medium</option>
-                    <option value="low">Low</option>
-                </select>
-            </td>
-            <td>
-                <form action="/tag_complete" autocomplete="on">
+            <tr id="taskInputCreator">
+                <td><input class="input-form" autocomplete="on" placeholder="Your task" type="text" id="task"
+                           name="task"></td>
+                <td><input class="input-form" type="date" id="date" name="date"></td>
+                <td>
+                    <select class="no-style input-form" id="priority" name="priority">
+                        <option value="hight">Hight</option>
+                        <option value="medium" selected>Medium</option>
+                        <option value="low">Low</option>
+                    </select>
+                </td>
+                <td>
                     <input class="input-form" placeholder="tag" type="text" id="tag-selector" name="tag-selector">
-                </form>
-            </td>
-            <td>
-                <button onclick="sendTodoForm()" class="btn btn-success">ADD</button>
-            </td>
-        </tr>
+                </td>
+                <td>
+                    <button onclick="sendTodoForm()" type="submit" class="btn btn-success">ADD</button>
+                </td>
+            </tr>
 
-    </table>
+        </table>
+    </div>
 </div>
 {% endblock %}

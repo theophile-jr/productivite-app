@@ -20,8 +20,8 @@
     --bs-danger: #dc3545;
     --bs-light: #f8f9fa;
     --bs-dark: #212529;
-    --bs-font-sans-serif: system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans","Liberation Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
-    --bs-font-monospace: SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono","Courier New",monospace;
+    --bs-font-sans-serif: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+    --bs-font-monospace: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
     --bs-gradient: linear-gradient(180deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0));
 }
 
@@ -44,17 +44,51 @@ select.no-style {
 #todo-container {
     padding: 1%;
     border-radius: 5px;
-    background-color: floralwhite;
+    background-color: #3c3c3c;
+    max-width: 90%;
+    width: 50em;
+    /*min-width: 90em;*/
 }
 
-#todo-container tr:nth-child(1){
+table{
+    border-collapse: collapse;
+}
+
+.scroll-x{
+    overflow-x: auto;
+}
+
+tr:nth-child(1) {
     margin-bottom: 60px;
+}
+
+th, td {
+    padding: 10px;
+}
+
+tr:not(#taskInputCreator):not(:first-child):hover {
+    background-color: #313131;
 }
 
 #todo-container th {
     padding-top: 12px;
     padding-bottom: 12px;
     text-align: left;
+    color: white;
+    font-size: 2vh;
+}
+
+table {
+    /*width: 30vw;*/
+    /*border-collapse: collapse;*/
+}
+
+.h-full {
+    height: 92vh;
+}
+
+.w-full{
+    width: 100vw;
 }
 
 .input-form {
@@ -68,13 +102,14 @@ select.no-style {
 
 .input-form:focus {
     border-radius: 5px;
-    border: 2px solid grey;
-    color: black;
+    border: 2px solid white;
+    color: white;
 }
+
 .btn-success {
     color: #fff !important;
-    background-color: #198754 !important;
-    border-color: #198754 !important;
+    background-color: #313131 !important;
+    border-color: white !important;
 }
 
 .btn-success:hover {
@@ -104,4 +139,25 @@ select.no-style {
     padding: .3rem .7rem;
     font-size: 1rem;
     border-radius: .25rem;
+}
+
+.items-center {
+    align-items: center;
+}
+
+.justify-center {
+    justify-content: center;
+}
+
+.colored {
+    /*width: 100vw;*/
+    border: 1px solid white;
+}
+
+.flex {
+    display: flex;
+}
+
+.block{
+    display: block;
 }
