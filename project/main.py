@@ -97,8 +97,15 @@ def ecoledirecte_post():
     #Check if the informations are valid, and display an error if not.
     response, token = ED.login(ED_username, ED_password)
 
-    if not token :
+    #print("token", token)
+    #print("code", response["code"])
+
+    if response["code"] == 505 :
         flash('Invalid username or password, please try again.')
+        return redirect(url_for("main.ecoledirecte"))
+    
+    elif response["code"] == 40129 :
+        flash('Format JSON invalide.')
         return redirect(url_for("main.ecoledirecte"))
 
     # Add informations in the database.
