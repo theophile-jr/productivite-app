@@ -12,7 +12,7 @@ function createTask() {
         taskNameWithoutSpace = taskList[i].name.replace(/\s/g, '');
 
         //Check if the element already exists
-        if (!document.getElementById(taskList[i].name + "Task" + taskList['taskID'])) {
+        if (!document.getElementById("Task" + taskList[i].taskID)) {
             //Create a line in the table
             var tr = document.createElement("tr");
             tr.setAttribute("id", "Task" + taskList[i].taskID);
@@ -44,7 +44,7 @@ function createTask() {
 
             //Add the trashbin
             var td = document.createElement("td");
-            td.innerHTML = "<button onclick=\"sendTodoForm('removeElement', this.name)\" name='"+taskList[i].taskID+"' class='no-style' ><i class=\"fa fa-trash-o trashbin\" style=\"font-size:20px\"></i></button>"
+            td.innerHTML = "<button onclick=\"sendTodoForm('removeElement', this.name)\" name='" + taskList[i].taskID + "' class='no-style' ><i class=\"fa fa-trash-o trashbin\" style=\"font-size:20px\"></i></button>"
             document.getElementById("Task" + taskList[i].taskID).appendChild(td);
         }
     }
@@ -69,14 +69,16 @@ function sendTodoForm(goal, checkBoxID, checkBoxStatus) {
             goal: 'removeElement',
             taskID: "" + checkBoxID + ""
         })
-    else //Creation of new task
+    else {
         data = JSON.stringify({
             goal: 'addElement',
             task: $("#task").val(),
             date: $("#date").val(),
             priority: $("#priority").val()
         })
-
+        if (!checkTaskForm(data))
+            return
+    }
     console.log(data)
     //Send the data
     $.ajax({
@@ -96,9 +98,8 @@ function sendTodoForm(goal, checkBoxID, checkBoxStatus) {
                 createTask(); // Update tasks in the DOM
             }
             if (goal == "removeElement") { //If it's a creation of new task push it to the list
-                for (z=0; z<taskList.length; z++)
-                {
-                    if (taskList[z].taskID == checkBoxID){
+                for (z = 0; z < taskList.length; z++) {
+                    if (taskList[z].taskID == checkBoxID) {
                         console.log(taskList)
                         taskList.splice(z, z + 1);
                         console.log(taskList)
@@ -155,3 +156,17 @@ function taskStatusChanged(checkBoxID) {
         $("#" + checkBoxID).parentsUntil("table").removeClass("line-through")
 }
 
+function checkTaskForm(data) {
+    //Description : Check if all input is corret
+    //Parameters  : data : -> the data to check
+    //Return      : true or false
+
+    data = JSON.parse(data)
+    if (data['task'].length <= 0) {
+        document.getElementById("taskFormError").innerHTML = "<strong>The task input can't be empty</strong>";
+        return false
+    } else {
+        document.getElementById("taskFormError").innerHTML = "";
+        return true
+    }
+}
