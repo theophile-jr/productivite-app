@@ -12,17 +12,17 @@ function createTask() {
         taskNameWithoutSpace = taskList[i].name.replace(/\s/g, '');
 
         //Check if the element already exists
-        if (!document.getElementById(taskList[i].name + "Task" + i)) {
+        if (!document.getElementById(taskList[i].name + "Task" + taskList['taskID'])) {
             //Create a line in the table
             var tr = document.createElement("tr");
-            tr.setAttribute("id", taskList[i].name + "Task" + i);
+            tr.setAttribute("id", "Task" + taskList[i].taskID);
             document.getElementById("todo-table").appendChild(tr);
 
             //Add the name and the checkbox
             var td = document.createElement("td");
             // console.log(taskList[i].status)
             td.innerHTML = "<input type=\"checkbox\" id=\"" + taskNameWithoutSpace + i + "CheckBox" + "\" onchange=\"taskStatusChanged(this.id); sendTodoForm('updateTaskStatus', '" + taskList[i].taskID + "', this.checked)\" > " + taskList[i].name;
-            document.getElementById(taskList[i].name + "Task" + i).appendChild(td);
+            document.getElementById("Task" + taskList[i].taskID).appendChild(td);
             if (taskList[i].status == "disable") { //If the task is 'done' mark the checkbox as  checked
                 document.getElementById("" + taskNameWithoutSpace + i + "CheckBox" + "").checked = true;
                 taskStatusChanged("" + taskNameWithoutSpace + i + "CheckBox" + "") //Add class
@@ -31,12 +31,21 @@ function createTask() {
             //Add the date
             var td = document.createElement("td");
             td.innerHTML = taskList[i].date;
-            document.getElementById(taskList[i].name + "Task" + i).appendChild(td);
+            document.getElementById("Task" + taskList[i].taskID).appendChild(td);
 
             //Add the priority
             var td = document.createElement("td");
             td.innerHTML = taskList[i].priority;
-            document.getElementById(taskList[i].name + "Task" + i).appendChild(td);
+            document.getElementById("Task" + taskList[i].taskID).appendChild(td);
+
+            //Empty colomne
+            var td = document.createElement("td");
+            document.getElementById("Task" + taskList[i].taskID).appendChild(td);
+
+            //Add the trashbin
+            var td = document.createElement("td");
+            td.innerHTML = "<button onclick=\"sendTodoForm('removeElement', this.name)\" name='"+taskList[i].taskID+"' class='no-style' ><i class=\"fa fa-trash-o trashbin\" style=\"font-size:20px\"></i></button>"
+            document.getElementById("Task" + taskList[i].taskID).appendChild(td);
         }
     }
 }
@@ -55,6 +64,11 @@ function sendTodoForm(goal, checkBoxID, checkBoxStatus) {
             taskID: "" + checkBoxID + "",
             status: !checkBoxStatus ? 'enable' : 'disable'
         })
+    else if (goal == "removeElement")
+        data = JSON.stringify({
+            goal: 'removeElement',
+            taskID: "" + checkBoxID + ""
+        })
     else //Creation of new task
         data = JSON.stringify({
             goal: 'addElement',
@@ -63,6 +77,7 @@ function sendTodoForm(goal, checkBoxID, checkBoxStatus) {
             priority: $("#priority").val()
         })
 
+    console.log(data)
     //Send the data
     $.ajax({
         type: "POST",
@@ -71,14 +86,27 @@ function sendTodoForm(goal, checkBoxID, checkBoxStatus) {
         cache: false,
         success: function (success) {
             console.log("Success " + success)
-            if (goal != "updateTaskStatus") { //If it's a creation of new task push it to the list
+            if (goal == "addElement") { //If it's a creation of new task push it to the list
                 taskList.push({
                     name: document.getElementById("task").value,
                     date: document.getElementById("date").value,
                     priority: document.getElementById("priority").value,
                     taskID: success //Get the id of the task in the DB
                 });
-                createTask(); // Show the task in the DOM
+                createTask(); // Update tasks in the DOM
+            }
+            if (goal == "removeElement") { //If it's a creation of new task push it to the list
+                for (z=0; z<taskList.length; z++)
+                {
+                    if (taskList[z].taskID == checkBoxID){
+                        console.log(taskList)
+                        taskList.splice(z, z + 1);
+                        console.log(taskList)
+                        console.log("#" + checkBoxID)
+                        $("#Task" + checkBoxID).remove();
+                    }
+                }
+                createTask(); // Update tasks in the DOM
             }
         },
         error: function () {

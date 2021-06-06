@@ -2,6 +2,8 @@
 <link rel="stylesheet" href="../static/css/master.css">
 <script src="/static/js/todo.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
 {% extends "base.html" %}
 
@@ -31,7 +33,7 @@
                     <input class="input-form" placeholder="tag" type="text" id="tag-selector" name="tag-selector">
                 </td>
                 <td>
-                    <button onclick="sendTodoForm()" type="submit" class="btn btn-success">ADD</button>
+                    <button onclick="sendTodoForm('addElement')" type="submit" class="btn btn-success">ADD</button>
                 </td>
             </tr>
 

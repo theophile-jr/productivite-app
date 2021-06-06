@@ -37,6 +37,8 @@ def todo_post():
     connection = sqlite3.connect('db.sqlite') #Connect to DB
     cursor = connection.cursor()
 
+    print(f"DEBUG : GOAL -> {data['goal']}") #DEBUG
+
     #Update the task status in the DB
     if data['goal'] == "updateStatus":
         cursor.execute("UPDATE todo SET status ='"+data['status']+"' WHERE taskID="+data['taskID']+"")
@@ -46,6 +48,9 @@ def todo_post():
         cursor.execute("SELECT * FROM todo WHERE userID='" + current_user.name + "' ORDER BY taskID DESC LIMIT 1")
         data_list = cursor.fetchall()
         print(f"DEBUG : TaskID -> {data_list[0][0]}") #DEBUG
+
+    elif data['goal'] == "removeElement":
+            cursor.execute("DELETE FROM todo WHERE taskID='"+data['taskID']+"'")
 
     connection.commit() #Save changes
     connection.close()
