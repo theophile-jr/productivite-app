@@ -7,7 +7,6 @@ from . import db
 import base64
 import html
 import re
-from rich import print
 import sqlite3
 
 class EcoleDirecte():
