@@ -116,7 +116,7 @@ def ecoledirecte_post():
 @main.route('/fetch_ecoledirecte', methods=['POST'])
 @login_required
 def ecoledirecte_fetch():
-    work, token = ED.fetch_work()
+    work, token = ED.get_work()
 
     if not token :
         print('Une erreur est surenue lors de la récupération des devoirs école directe')
