@@ -139,8 +139,8 @@ def ecoledirecte_fetch():
     work, token = ED.AddWork(password)
 
     if not token :
-        flash('Une erreur est survenue lors de la récupération des devoirs école directe')
-        return redirect(url_for("main.profile"))
+        flash('Mot de passe incorrect')
+        return redirect(url_for("main.ecoledirecte_fetch"))
 
     print(work)
 

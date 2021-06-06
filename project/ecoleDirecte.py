@@ -67,6 +67,8 @@ class EcoleDirecte():
         # Get login token from ED
         response, token = EcoleDirecte.login(current_user.ed_username, decrypt(passwordKey, current_user.ed_password))
         #print(response)
+        if not token:
+            return [], token
         # Get all work
         work, token = EcoleDirecte.fetch_work(response["data"]["accounts"][0]["id"], token)
 
