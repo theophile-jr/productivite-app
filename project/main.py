@@ -98,6 +98,7 @@ def ecoledirecte_post():
     # Get informations throught the form.
     ED_username = request.form.get('username')
     ED_password = request.form.get('password')
+    website_password = request.form.get('website_password')
 
     #Check if the informations are valid, and display an error if not.
     response, token = ED.login(ED_username, ED_password)
@@ -114,6 +115,35 @@ def ecoledirecte_post():
         return redirect(url_for("main.ecoledirecte"))
 
     # Add informations in the database.
-    ED.link(ED_username, ED_password)
+    result = ED.link(ED_username, ED_password, website_password)
+
+    if not result: # échec link
+        flash("User Password is incorrect")
 
     return redirect(url_for('main.profile'))
+
+@main.route('/ecoledirecte_fetch')
+@login_required
+def ecoledirecte_fetch_form():
+    return render_template('ecoledirecte_fetch.html')
+
+@main.route('/ecoledirecte_fetch', methods=['POST'])
+@login_required
+def ecoledirecte_fetch():
+    password = request.form.get('password')
+
+    if not password :
+        flash('Veuillez renseigner votre mot de passe')
+        return redirect(url_for("main.ecoledirecte_fetch"))
+
+    work, token = ED.AddWork(password)
+
+    if not token :
+        flash('Une erreur est survenue lors de la récupération des devoirs école directe')
+        return redirect(url_for("main.profile"))
+
+    print(work)
+
+    return redirect(url_for("main.todo"))
+    
+    

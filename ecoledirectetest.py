@@ -1,11 +1,14 @@
 from getpass import getpass
 import locale
-
 from requests import request as req
 from rich import print
 from rich.console import Console
 from rich.table import Table
 import inquirer
+
+import base64
+import html
+import re
 
 locale.setlocale(locale.LC_ALL, 'fr_FR.UTF-8')
 console = Console()
@@ -84,8 +87,14 @@ def fetch_work(account, token: str):
 #https://api.ecoledirecte.com/v3/Eleves/6097/cahierdetexte/2021-06-08.awp?verbe=get&
 
 def handle_work(data):
-    for task in data.items():
-        print(task)
+    #print(list(data.items()))
+    tasks = list(data.items())
+    
+    for task in tasks:
+        print(task) # devoir en entier
+        
+
+
 
 
 def main():
@@ -96,12 +105,11 @@ def main():
     if not token:
         print(loginRes['message'])
         calm_exit()
-
     account = select_account(loginRes['data']['accounts'])
     print(f"[blue]Bonjour, [bold]{account['prenom']}[/].[/]")
 
     WorkRes, token = fetch_work(account, token)
-    print(WorkRes['code'])
+    #print(WorkRes['code'])
     if WorkRes['code'] != 200:
         print(WorkRes['message'])
         calm_exit()
