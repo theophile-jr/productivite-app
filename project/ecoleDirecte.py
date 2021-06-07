@@ -8,7 +8,7 @@ import base64
 import html
 import re
 import sqlite3
-from rich import print # à retirer une fois debug terminé
+#from rich import print
 
 class EcoleDirecte():
 
@@ -75,8 +75,8 @@ class EcoleDirecte():
 
         # add work to BDD
         for data in work:
-            cursor.execute("INSERT INTO todo (userID, task, date, priority) VALUES ('{}','{}','{}','{}')"
-                .format(current_user.name, data['task'], data['date'], data['priority']))
+            cursor.execute("INSERT INTO todo (userID, task, date, priority, status) VALUES ('{}','{}','{}','{}','{}')"
+                .format(current_user.name, data['task'], data['date'], data['priority'], data['status']))
             
         connection.commit() #Save changes
         connection.close()
@@ -120,7 +120,7 @@ class EcoleDirecte():
                         "date" : date,
                         "priority" : "medium",
                         "tag" : "Contrôle" if task["interrogation"] else "Devoir",
-                        "status" : "enable" if task["aFaire"]["effectue"] else "disable"})
+                        "status" : "disable" if task["aFaire"]["effectue"] else "enable"})
             #print(tasks)
             return tasks
 
