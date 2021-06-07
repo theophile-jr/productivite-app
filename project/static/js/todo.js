@@ -21,11 +21,11 @@ function createTask() {
             //Add the name and the checkbox
             var td = document.createElement("td");
             // console.log(taskList[i].status)
-            td.innerHTML = "<input type=\"checkbox\" id=\"" + taskNameWithoutSpace + i + "CheckBox" + "\" onchange=\"taskStatusChanged(this.id); sendTodoForm('updateTaskStatus', '" + taskList[i].taskID + "', this.checked)\" > " + taskList[i].name;
+            td.innerHTML = "<input type=\"checkbox\" id=\"" + taskList[i].taskID + i + "CheckBox" + "\" onchange=\"taskStatusChanged(this.id); sendTodoForm('updateTaskStatus', '" + taskList[i].taskID + "', this.checked)\" > " + taskList[i].name;
             document.getElementById("Task" + taskList[i].taskID).appendChild(td);
             if (taskList[i].status == "disable") { //If the task is 'done' mark the checkbox as  checked
-                document.getElementById("" + taskNameWithoutSpace + i + "CheckBox" + "").checked = true;
-                taskStatusChanged("" + taskNameWithoutSpace + i + "CheckBox" + "") //Add class
+                document.getElementById("" + taskList[i].taskID + i + "CheckBox" + "").checked = true;
+                taskStatusChanged("" + taskList[i].taskID + i + "CheckBox" + "") //Add class
             }
 
             //Add the date
