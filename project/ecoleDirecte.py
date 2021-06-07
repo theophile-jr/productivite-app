@@ -8,6 +8,7 @@ import base64
 import html
 import re
 import sqlite3
+from rich import print # à retirer une fois debug terminé
 
 class EcoleDirecte():
 
@@ -95,7 +96,11 @@ class EcoleDirecte():
                 rtask = req("POST", "https://api.ecoledirecte.com/v3/Eleves/" +
                     str(accountID) + f"/cahierdetexte/{date}.awp?verbe=get&", data=payload).json()
                 devoirs = rtask["data"]["matieres"]
+                # Sort the response to keep only the work and nothing else
+                devoirs = [task for task in devoirs if "aFaire" in task.keys()]
+                #print(devoirs)
                 for task in devoirs: # each work of the day
+                    #print(task)
                     # get the description
                     a = base64.b64decode(task["aFaire"]["contenu"])
                     descriptionHTML = a.decode("UTF-8")
@@ -110,11 +115,12 @@ class EcoleDirecte():
                     # get subject
                     subject = task['matiere']
                     # add the task to the list
-                    tasks.append({
+                    tasks.append({ #
                         "task" : f"{subject}  {desc}",
                         "date" : date,
                         "priority" : "medium",
-                        "tag" : "Contrôle" if task["interrogation"] else "Devoir"})
+                        "tag" : "Contrôle" if task["interrogation"] else "Devoir",
+                        "status" : "enable" if task["aFaire"]["effectue"] else "disable"})
             #print(tasks)
             return tasks
 
