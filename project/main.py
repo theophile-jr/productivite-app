@@ -144,7 +144,7 @@ def ecoledirecte_fetch():
         flash('Mot de passe incorrect')
         return redirect(url_for("main.ecoledirecte_fetch"))
 
-    print(work)
+    #print(work)
 
     return redirect(url_for("main.todo"))
     

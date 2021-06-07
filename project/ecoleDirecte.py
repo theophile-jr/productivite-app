@@ -118,7 +118,7 @@ class EcoleDirecte():
                     tasks.append({ #
                         "task" : f"{subject}  {desc}",
                         "date" : date,
-                        "priority" : "medium",
+                        "priority" : "hight" if task["interrogation"] else "medium",
                         "tag" : "Contrôle" if task["interrogation"] else "Devoir",
                         "status" : "disable" if task["aFaire"]["effectue"] else "enable"})
             #print(tasks)
