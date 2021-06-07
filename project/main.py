@@ -148,4 +148,7 @@ def ecoledirecte_fetch():
 
     return redirect(url_for("main.todo"))
     
-    
+@main.route('/pomodoro')
+@login_required
+def pomodoro():
+    return render_template('pomodoro.html')
