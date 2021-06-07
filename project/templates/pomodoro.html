@@ -4,7 +4,7 @@
 <link rel="stylesheet" href="{{ url_for('static', filename='css/pomodoro-style.css') }}" />
 <link rel="stylesheet" href="{{ url_for('static', filename='css/master.css') }}" />
 
-<div class=" colored flex items-center justify-center pomodoro-page">
+<div class=" block items-center justify-center pomodoro-page">
 
   <figure class="clock">
     <div class="mins">0</div>
@@ -26,9 +26,9 @@
   </figure>
 
   <div class="btn-group">
-    <button class="start">start focus</button>
-    <button class="reset">reset</button>
-    <button class="pause">pause</button>
+    <button class="start btn btn-success">start focus</button>
+    <button class="reset btn btn-danger">reset</button>
+    <button class="pause btn btn-warning">pause</button>
   </div>
 
   <script src="{{ url_for('static', filename='js/settings.js') }}"></script>

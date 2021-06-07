@@ -6,6 +6,21 @@
     padding: 0;
     margin: 0;
 }
+.pomodoro-page {
+    width: 100vw;
+    height: 30vh;
+    /*padding: 35px;*/
+    color: white;
+    font-family: "Montserrat", sans-serif;
+    justify-content: center;
+}
+
+h1 {
+    margin: 15px 0;
+    font-weight: 900;
+    font-size: 28px;
+    text-align: center;
+}
 
 .btn-group {
     display: flex;
@@ -44,7 +59,7 @@ button {
     transition: 0.5s;
     transform: rotate(-90deg);
     transform-origin: 50% 50%;
-    stroke: rgb(51, 65, 255);
+    stroke: #A0BC3B;
 }
 
 .danger {
@@ -69,7 +84,6 @@ button {
     }
 }
 
-@media screen and (min-width: 768px) {
     .btn-group {
         grid-area: btns;
         justify-content: center;
@@ -92,10 +106,33 @@ button {
     footer {
         width: 100%;
     }
+
+
+.start {
+    background: rgb(48, 33, 253);
+    color: white;
+}
+.break {
+    background: rgb(0, 199, 116);
+    color: #000000;
+}
+.reset {
+    background: rgb(250, 69, 109);
+    color: #000000;
+}
+.pause {
+    background: rgb(253, 143, 17);
+}
+.resume {
+    background: rgb(131, 10, 252);
+    color: white;
 }
 
-@media screen and (max-width: 375px) {
-    form {
-        height: 40%;
-    }
+button {
+    border-radius: 5px;
+    margin: 5px;
+    padding: 10px;
+    border: none;
+    font-size: 18px;
+    transition: 0.5s ease-in-out;
 }

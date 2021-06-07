@@ -118,6 +118,30 @@ table {
     border-color: #146c43;
 }
 
+.btn-danger {
+    color: white !important;
+    background-color: darkred !important;
+    /*border-color: white !important;*/
+}
+
+.btn-danger:hover {
+    color: #fff;
+    background-color: red !important;
+    border-color: #146c43;
+}
+
+.btn-warning {
+    color: white !important;
+    background-color: darkorange !important;
+    /*border-color: white !important;*/
+}
+
+.danger {
+    stroke: rgb(243, 17, 28);
+    animation: pulse 0.9s ease-in-out infinite;
+}
+
+
 .btn {
     display: inline-block;
     font-weight: 400;
