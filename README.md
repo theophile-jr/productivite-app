@@ -7,5 +7,5 @@ Il est également possible de lier son compte école directe à son compte afin 
 
 FONCTIONNEMENT
 ----------
-Le site utilise une base de donnée SQL (sqlite3) et une serveur flask en python pour son fonctionnement
+Le site utilise une base de donnée SQL (sqlite3) et une serveur flask en python pour son fonctionnement --> utilisation de jinja pour les templates
 
