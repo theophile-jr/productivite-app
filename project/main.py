@@ -22,7 +22,7 @@ def profile():
 @main.route('/todo')
 @login_required
 def todo():
-    return render_template('todo.html', name=current_user.name)
+    return render_template('todo.html', name=current_user.name, ecoledirecte=bool(current_user.ed_username))
 
 # Todo section
 # Add the elements added by the user in the DB
