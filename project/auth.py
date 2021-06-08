@@ -33,6 +33,9 @@ def login_post():
 
 @auth.route('/signup')
 def signup():
+    # check if the user is logged in, if yes, redirect him to the profile page
+    if current_user.is_authenticated: 
+        return redirect(url_for('main.profile'))
     return render_template('signup.html')
 
 @auth.route('/signup', methods=['POST'])
