@@ -37,6 +37,11 @@ function createTask() {
             var td = document.createElement("td");
             td.innerHTML = taskList[i].priority;
             document.getElementById("Task" + taskList[i].taskID).appendChild(td);
+            
+            //Add the tag
+            var td = document.createElement("td");
+            td.innerHTML = taskList[i].tag;
+            document.getElementById("Task" + taskList[i].taskID).appendChild(td);
 
             //Empty column
             var td = document.createElement("td");
@@ -74,7 +79,8 @@ function sendTodoForm(goal, checkBoxID, checkBoxStatus) {
             goal: 'addElement',
             task: $("#task").val(),
             date: $("#date").val(),
-            priority: $("#priority").val()
+            priority: $("#priority").val(),
+            tag: $("#tag-selector").val()
         })
         if (!checkTaskForm(data))
             return
@@ -93,6 +99,7 @@ function sendTodoForm(goal, checkBoxID, checkBoxStatus) {
                     name: document.getElementById("task").value,
                     date: document.getElementById("date").value,
                     priority: document.getElementById("priority").value,
+                    tag: document.getElementById("tag-selector").value,
                     taskID: success //Get the id of the task in the DB
                 });
                 createTask(); // Update tasks in the DOM
@@ -116,7 +123,7 @@ function sendTodoForm(goal, checkBoxID, checkBoxStatus) {
     });
 }
 
-window.onload = function GetTodoData() {
+$(document).ready(function() {
     //DESCRIPTION : Get the user tasks from the DB
     //Parameters : None
 
@@ -133,16 +140,20 @@ window.onload = function GetTodoData() {
                     name: todoData[y][2],
                     date: todoData[y][3],
                     priority: todoData[y][4],
-                    status: todoData[y][5]
+                    status: todoData[y][5],
+                    tag: todoData[y][6]
                 });
                 createTask(); //Show them in the DOM
             }
+            document.getElementById("tag-selector").addEventListener('focus', function(){
+                getTags(this);
+            })
         },
         error: function () {
             console.log("An error occurred");
         }
     });
-}
+})
 
 function taskStatusChanged(checkBoxID) {
     //Description : Apply a style when a task is 'done'.
@@ -169,4 +180,27 @@ function checkTaskForm(data) {
         document.getElementById("taskFormError").innerHTML = "";
         return true
     }
+}
+
+function getTags(input) {
+    //DESCRIPTION : Get the user tags from the DB
+    //Parameters : None
+
+    taskList = [];
+    $.ajax({
+        type: "POST",
+        url: "/gettags",
+        data: JSON.stringify({}),
+        cache: false,
+        success: function (todoTags) {
+            tagList= [] 
+            todoTags.forEach(tag => {
+                if (tag[0]) tagList.push({label :tag[0], value:tag[0]}) 
+            });
+            $("#tag-selector").autocomplete({source: tagList})
+        },
+        error: function () {
+            console.log("An error occurred");
+        }
+    });
 }

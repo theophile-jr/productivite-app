@@ -44,8 +44,8 @@ def todo_post():
         cursor.execute("UPDATE todo SET status ='"+data['status']+"' WHERE taskID="+data['taskID']+"")
 
     elif data['goal'] == "addElement":
-        cursor.execute("INSERT INTO todo (userID, task, date, priority) VALUES ('{}','{}','{}','{}')"
-                .format(current_user.name, data['task'], data['date'], data['priority']))
+        cursor.execute("INSERT INTO todo (userID, task, date, priority, tag) VALUES ('{}','{}','{}','{}', '{}')"
+                .format(current_user.name, data['task'], data['date'], data['priority'], data["tag"]))
         cursor.execute("SELECT * FROM todo WHERE userID='{}' ORDER BY taskID DESC LIMIT 1"
                 .format(current_user.name))
         data_list = cursor.fetchall()
@@ -77,6 +77,18 @@ def todo_get():
     connection.commit() #Save changes
     connection.close()
     print (data_list)
+    return jsonify(data_list)
+
+@main.route('/gettags', methods=["POST"])
+@login_required
+def todo_get_tags():
+    # get all tasks of the current user
+    connection = sqlite3.connect('db.sqlite') #Connect to DB
+    cursor = connection.cursor()
+    cursor.execute(f"SELECT tag FROM todo WHERE userID='{current_user.name}'")
+    data_list = cursor.fetchall()
+
+    connection.close()
     return jsonify(data_list)
 
 
