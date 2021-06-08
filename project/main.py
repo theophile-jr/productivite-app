@@ -122,7 +122,7 @@ def ecoledirecte_post():
     if not result: # échec link
         flash("User Password is incorrect")
 
-    return redirect(url_for('main.profile'))
+    return redirect(url_for('main.todo'))
 
 @main.route('/ecoledirecte_fetch')
 @login_required

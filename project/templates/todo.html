@@ -1,5 +1,5 @@
 <!-- templates/index.html -->
-<link rel="stylesheet" href="{{ url_for('static', filename='css/master.css') }}" />
+<link rel="stylesheet" href="{{ url_for('static', filename='css/master.css') }}"/>
 <script src="{{ url_for('static', filename='js/todo.js') }}"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -8,7 +8,8 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div  class="items-center justify-center flex marginTop-xl w-full h-full">
+
+<div class="items-center justify-center flex marginTop-xl w-full h-full">
     <div class="scroll-x items-center justify-center" id="todo-container">
         <table id="todo-table">
             <span id="taskFormError" style="color: red;"> </span>
@@ -16,7 +17,21 @@
                 <th> TASKS</th>
                 <th><strong>DUE DATE</strong></th>
                 <th><strong>PRIORITY</strong></th>
-                <th><strong>TAG</strong></th>
+                <th class="flex">
+                    <strong>TAG</strong>
+                    {% if not ecoledirecte %}
+                    <button>
+                        <a href="{{ url_for('main.ecoledirecte') }}">Link your ecoledirecte account</a>
+                    </button>
+                    {% else %}
+                    <button>
+                        <a href="{{ url_for('main.ecoledirecte_unlink') }}">(Unlink ?)</a>
+                    </button>
+                    <button>
+                        <a href="{{ url_for('main.ecoledirecte_fetch_form') }}">Sync tasks from Ecole Directe</a>
+                    </button>
+                    {% endif %}
+                </th>
             </tr>
 
             <tr id="taskInputCreator">

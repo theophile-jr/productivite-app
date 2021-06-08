@@ -1,6 +1,11 @@
+<link rel="stylesheet" href="{{ url_for('static', filename='css/forms.css') }}"/>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/master.css') }}"/>
+
 {% extends "base.html" %}
 
 {% block content %}
+<div class="justify-center grid items-center w-full text-center">
+
 <h1 class="title">
   Please confirm your password for this account
 </h1>
@@ -16,8 +21,10 @@
   <form method="POST" action="/ecoledirecte_fetch">
     <div class="field">
       <div class="control">
-          <input class="input is-large" type="password" name="password" placeholder="Password du compte" autofocus="">
+          <input class="input-log is-large" type="password" name="password" placeholder="Password du compte" autofocus="">
         </div>
       </div>
-    <button class="button is-block is-info is-large is-fullwidth">Confirm</button>
-{% endblock %}
+    <button class="btn btn-success btn-log">Confirm</button>
+</div>
+
+  {% endblock %}

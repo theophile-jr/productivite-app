@@ -1,13 +1,15 @@
-{% extends "base.html" %}
+<!-- templates/signup.html -->
+<link rel="stylesheet" href="{{ url_for('static', filename='css/forms.css') }}"/>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/master.css') }}"/>
 
+{% extends "base.html" %}
 {% block content %}
-<h1 class="title">
-  Login your Ecole Directe Account
-</h1>
-<h2 class="subtitle">
-  This will allow us to plan your homework in our tasks.
-</h2>
-<div class="box">
+
+<div class="justify-center grid items-center w-full text-center">
+
+  <h2 class="title">
+    Link your Ecole Directe account
+  </h2>
 
   {% with messages = get_flashed_messages() %}
   {% if messages %}
@@ -16,26 +18,32 @@
   </div>
   {% endif %}
   {% endwith %}
-  <form method="POST" action="/ecoledirecte">
-    <div class="field">
-      <div class="control">
-          <input class="input is-large" type="text" name="username" placeholder="Username Ecole Directe" autofocus="">
-        </div>
-      </div>
-      
+
+
+    <form method="POST" action="/ecoledirecte">
       <div class="field">
         <div class="control">
-          <input class="input is-large" type="password" name="password" placeholder="Password Ecole Directe">
-      </div>
-    </div>
-
-    <div class="field">
-      <div class="control">
-          <input class="input is-large" type="password" name="website_password" placeholder="Password de ce compte" autofocus="">
+          <input class="input-log is-large" type="text" name="username" placeholder="Username Ecole Directe"
+                 autofocus="">
         </div>
       </div>
-    <button class="button is-block is-info is-large is-fullwidth">Login</button>
-  </form>
-  
+
+      <div class="field">
+        <div class="control">
+          <input class="input-log is-large" type="password" name="password"
+                 placeholder="Password Ecole Directe">
+        </div>
+      </div>
+
+      <div class="field">
+        <div class="control">
+          <input class="input-log is-large" type="password" name="website_password"
+                 placeholder="Password de ce compte" autofocus="">
+        </div>
+      </div>
+      <button class="btn btn-success btn-log is-block is-info is-large is-fullwidth">Login</button>
+    </form>
+  </div>
 </div>
-  {% endblock %}
+{% endblock %}
+
