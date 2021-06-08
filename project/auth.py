@@ -47,7 +47,19 @@ def signup_post():
     if user: # if a user is found, we want to redirect back to signup page so user can try again  
         flash('Email address already exists')
         return redirect(url_for('auth.signup'))
-
+    # additional checks to ensure that the email and password are valid
+    if not email: # empty email
+        flash('Please enter an email adress')
+        return redirect(url_for('auth.signup'))
+    if not password: # empty password
+        flash('Please enter a password')
+        return redirect(url_for('auth.signup'))
+    if not name: # empty name
+        flash('Please enter a name')
+        return redirect(url_for('auth.signup'))
+    if "@" not in email or len(email)<3: # invalid email
+        flash('Invalid email')
+        return redirect(url_for('auth.signup'))
     # create new user with the form data. Hash the password so plaintext version isn't saved.
     new_user = User(email=email, name=name, password=generate_password_hash(password, method='sha256'))
 
