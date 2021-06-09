@@ -75,8 +75,8 @@ class EcoleDirecte():
 
         # add work to BDD
         for data in work:
-            cursor.execute("INSERT INTO todo (userID, task, date, priority, status) VALUES ('{}','{}','{}','{}','{}')"
-                .format(current_user.name, data['task'], data['date'], data['priority'], data['status']))
+            cursor.execute("INSERT INTO todo (userID, task, date, priority, status, tag) VALUES ('{}','{}','{}','{}','{}','{}')"
+                .format(current_user.name, data['task'], data['date'], data['priority'], data['status'], data['tag']))
             
         connection.commit() #Save changes
         connection.close()
