@@ -22,18 +22,6 @@
                 <th><strong>PRIORITY</strong></th>
                 <th class="flex">
                     <strong>TAG</strong>
-                    {% if not ecoledirecte %}
-                    <button>
-                        <a href="{{ url_for('main.ecoledirecte') }}">Link your ecoledirecte account</a>
-                    </button>
-                    {% else %}
-                    <button>
-                        <a href="{{ url_for('main.ecoledirecte_unlink') }}">(Unlink ?)</a>
-                    </button>
-                    <button>
-                        <a href="{{ url_for('main.ecoledirecte_fetch_form') }}">Sync tasks from Ecole Directe</a>
-                    </button>
-                    {% endif %}
                 </th>
             </tr>
 
@@ -54,6 +42,15 @@
                 <td>
                     <button onclick="sendTodoForm('addElement')" type="submit" class="btn btn-success">ADD</button>
                 </td>
+                {% if not ecoledirecte %}
+                <button class="btn btn-success btn-log is-block is-info is-large is-fullwidth">
+                    <a href="{{ url_for('main.ecoledirecte') }}">Link your ecoledirecte account</a>
+                </button>
+                {% else %}
+                <button class="btn btn-success btn-log is-block is-info is-large is-fullwidth">
+                    <a href="{{ url_for('main.ecoledirecte_fetch_form') }}">Sync tasks from Ecole Directe</a>
+                </button>
+                {% endif %}
             </tr>
 
         </table>
