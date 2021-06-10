@@ -79,7 +79,7 @@ tr:not(#taskInputCreator):not(:first-child):hover {
 }
 
 table {
-    /*width: 30vw;*/
+    width: 100%;
     /*border-collapse: collapse;*/
 }
 
