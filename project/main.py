@@ -19,10 +19,10 @@ def index():
 def profile():
     return render_template('profile.html', name=current_user.name, ecoledirecte=bool(current_user.ed_username))
 
-@main.route('/todo')
+@main.route('/todo', methods=['POST', 'GET'])
 @login_required
 def todo():
-    return render_template('todo.html', name=current_user.name, ecoledirecte=bool(current_user.ed_username))
+    return render_template('todo.html', name=current_user.name, ecoledirecte=bool(current_user.ed_username), method=request.method)
 
 # Todo section
 # Add the elements added by the user in the DB

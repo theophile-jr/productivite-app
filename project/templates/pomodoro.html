@@ -3,6 +3,7 @@
 {% block content %}
 <link rel="stylesheet" href="{{ url_for('static', filename='css/pomodoro-style.css') }}" />
 <link rel="stylesheet" href="{{ url_for('static', filename='css/master.css') }}" />
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
 <div class=" block items-center justify-center pomodoro-page">
 
@@ -31,9 +32,21 @@
     <button class="pause btn btn-warning">pause</button>
   </div>
 
+  <div id="todo"></div>
+
   <script src="{{ url_for('static', filename='js/settings.js') }}"></script>
   <script src="{{ url_for('static', filename='js/timer.js') }}"></script>
   <script src="{{ url_for('static', filename='js/progress.js') }}"></script>
+  <script>
+    $.ajax({
+      type: "POST",
+        url: "/todo",
+        cache: false,
+        success: function(data){
+          $("#todo").append(data)
+        }
+    })
+  </script>
 </div>
 
 

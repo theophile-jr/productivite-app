@@ -8,7 +8,9 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <link href="https://code.jquery.com/ui/1.8.24/themes/ui-darkness/jquery-ui.css" rel="stylesheet" type="text/css" />  
 
+{% if method == 'GET' %}
 {% extends "base.html" %}
+{% endif %}
 
 {% block content %}
 
@@ -25,6 +27,7 @@
                 </th>
             </tr>
 
+            {% if method == 'GET' %}
             <tr id="taskInputCreator">
                 <td><input class="input-form" autocomplete="on" placeholder="Your task" type="text" id="task"
                            name="task"></td>
@@ -52,6 +55,7 @@
                 </button>
                 {% endif %}
             </tr>
+            {% endif %}
 
         </table>
     </div>

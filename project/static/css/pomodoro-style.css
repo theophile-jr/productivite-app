@@ -136,3 +136,5 @@ button {
     font-size: 18px;
     transition: 0.5s ease-in-out;
 }
+
+#todo .items-center {height: auto; margin: 20px;}
