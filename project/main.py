@@ -133,6 +133,7 @@ def ecoledirecte_post():
 
     if not result: # échec link
         flash("User Password is incorrect")
+        return redirect(url_for("main.ecoledirecte"))
 
     return redirect(url_for('main.todo'))
 
