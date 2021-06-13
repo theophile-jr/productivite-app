@@ -16,7 +16,7 @@ function createTask() {
             //Create a line in the table
             var tr = document.createElement("tr");
             tr.setAttribute("id", "Task" + taskList[i].taskID);
-            document.getElementById("todo-table").appendChild(tr);
+            document.getElementById("tasksContent").appendChild(tr);
 
             //Add the name and the checkbox
             var td = document.createElement("td");

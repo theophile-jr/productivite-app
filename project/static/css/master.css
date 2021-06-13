@@ -48,6 +48,19 @@ select.no-style {
     max-width: 90%;
     width: 50em;
     /*min-width: 90em;*/
+    max-height: 70vh;
+    overflow-y: auto;
+}
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+#todo-container::-webkit-scrollbar {
+    display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+#todo-container {
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
 }
 
 table{
@@ -75,7 +88,7 @@ tr:not(#taskInputCreator):not(:first-child):hover {
     padding-bottom: 12px;
     text-align: left;
     color: white;
-    font-size: 2vh;
+    font-size: 1em;
 }
 
 table {
