@@ -108,10 +108,8 @@ class EcoleDirecte():
                     # Conversion Regex en string normale
                     desc = re.sub(r"<\/?[a-z]+>|\n", "", description)
                     # remove special characters that break the SQL execution
-                    descfiltered = list(filter(lambda x: x not in ["(",")",":","'"]))
-                    desc = ""
-                    for carac in descfiltered:
-                        desc += carac
+                    descfiltered = filter(lambda x: x not in ["(",")",":","'"])
+                    desc = "".join(descfiltered)
                     # get subject
                     subject = task['matiere']
                     # add the task to the list
